@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKILL UP</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --black: #212121;
+            --light-gray: #f1f3f4;
+        }
+        
+
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .nav-buttons .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            margin-right: 1rem;
+        }
+        
+        .btn-login:hover {
+            background-color: rgba(26, 115, 232, 0.1);
+        }
+        
+        .btn-signup {
+            background-color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--dark-blue);
+            border-color: var(--dark-blue);
+        }
+        
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            padding: 0 1.5rem;
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #424242;
+        }
+        
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--black);
+        }
+        
+        .section-title h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: #666;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img {
+            height: 180px;
+            background-color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--black);
+        }
+        
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .card-content a {
+            display: inline-block;
+            color: var(--primary-blue);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .card-content a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+        
+        /* Progress Section */
+        .progress-section {
+            background-color: var(--white);
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+        
+        .progress-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-blue);
+            border-radius: 5px;
+        }
+        
+
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #bdbdbd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--white);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #424242;
+            color: #bdbdbd;
+        }
+        
+    
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            .nav-links {
+                margin-bottom: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .search-bar input {
+                border-radius: 5px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .search-bar button {
+                border-radius: 5px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="1.png" alt="SkillUp Logo">
+            <h1>SkillUp</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Skills</a></li>
+            <li><a href="#">Progress</a></li>
+            <li><a href="#">Resources</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn btn-login"><a href="#http://127.0.0.1:5500/login.html">Login up</a></button>
+            <button class="btn btn-signup"><a href="signup.html">Sign Up</a></button>
+        </div>
+    </nav>
+    
+
+    <section class="hero">
+        <h2>Enhance Your Skills with Our Learning Dashboard</h2>
+        <p>Track your progress, discover new courses, and achieve your learning goals with our comprehensive skill development platform.</p>
+    </section>
+    
+
+    <div class="container">
+        <div class="section-title">
+            <h3>Featured Courses</h3>
+            <p>Start learning from our most popular courses</p>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <div class="card-img">📊</div>
+                <div class="card-content">
+                    <h4>Data Science Fundamentals</h4>
+                    <p>Learn the basics of data analysis, visualization, and machine learning with Python.</p>
+                    <a href="#">Start Learning →</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img">💻</div>
+                <div class="card-content">
+                    <h4>Web Development Bootcamp</h4>
+                    <p>Master HTML, CSS, JavaScript and build responsive websites from scratch.</p>
+                    <a href="#">Start Learning →</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img">📱</div>
+                <div class="card-content">
+                    <h4>Mobile App Development</h4>
+                    <p>Create cross-platform mobile applications using React Native framework.</p>
+                    <a href="#">Start Learning →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+<section class="progress-section">
+    <div class="container">
+        <div class="section-title">
+            <h3>Your Skills Progress</h3>
+            <p>Track your learning journey and see how far you've come</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-item">
+                <div class="progress-title">
+                    <span>Web Development</span>
+                    <span id="web-dev-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="web-dev-bar" style="width: 0%;"></div>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="progress-slider" id="web-dev-slider">
+            </div>
+            <div class="progress-item">
+                <div class="progress-title">
+                    <span>Data Analysis</span>
+                    <span id="data-analysis-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="data-analysis-bar" style="width: 0%;"></div>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="progress-slider" id="data-analysis-slider">
+            </div>
+            <div class="progress-item">
+                <div class="progress-title">
+                    <span>UI/UX Design</span>
+                    <span id="ui-ux-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="ui-ux-bar" style="width: 0%;"></div>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="progress-slider" id="ui-ux-slider">
+            </div>
+            <div class="progress-item">
+                <div class="progress-title">
+                    <span>Problem Solving</span>
+                    <span id="problem-solving-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="problem-solving-bar" style="width: 0%;"></div>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="progress-slider" id="problem-solving-slider">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const sliders = {
+            'web-dev': {
+                slider: document.getElementById('web-dev-slider'),
+                percent: document.getElementById('web-dev-percent'),
+                bar: document.getElementById('web-dev-bar')
+            },
+            'data-analysis': {
+                slider: document.getElementById('data-analysis-slider'),
+                percent: document.getElementById('data-analysis-percent'),
+                bar: document.getElementById('data-analysis-bar')
+            },
+            'ui-ux': {
+                slider: document.getElementById('ui-ux-slider'),
+                percent: document.getElementById('ui-ux-percent'),
+                bar: document.getElementById('ui-ux-bar')
+            },
+            'problem-solving': {
+                slider: document.getElementById('problem-solving-slider'),
+                percent: document.getElementById('problem-solving-percent'),
+                bar: document.getElementById('problem-solving-bar')
+            }
+        };
+
+        
+        const defaultValues = {
+            'web-dev': 65,
+            'data-analysis': 42,
+            'ui-ux': 78,
+            'problem-solving': 35
+        };
+
+        
+        for (const [skill, elements] of Object.entries(sliders)) {
+            
+            elements.slider.value = defaultValues[skill];
+            elements.percent.textContent = `${defaultValues[skill]}%`;
+            elements.bar.style.width = `${defaultValues[skill]}%`;
+
+
+            elements.slider.addEventListener('input', function() {
+                const value = this.value;
+                sliders[skill].percent.textContent = `${value}%`;
+                sliders[skill].bar.style.width = `${value}%`;
+                
+
+                if (value < 30) {
+                    sliders[skill].bar.style.backgroundColor = '#e53935'; 
+                } else if (value < 70) {
+                    sliders[skill].bar.style.backgroundColor = '#fb8c00';
+                } else {
+                    sliders[skill].bar.style.backgroundColor = 'var(--primary-blue)';
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+
+    .progress-slider {
+        width: 100%;
+        margin-top: 10px;
+        -webkit-appearance: none;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--light-gray);
+        outline: none;
+    }
+    
+    .progress-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary-blue);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .progress-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        background: var(--dark-blue);
+    }
+    
+    .progress-slider::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary-blue);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .progress-slider::-moz-range-thumb:hover {
+        transform: scale(1.1);
+        background: var(--dark-blue);
+    }
+</style>
+
+    <div class="container">
+        <div class="section-title">
+            <h3>Recommended Resources</h3>
+            <p>Hand-picked materials to boost your learning</p>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <div class="card-img">📚</div>
+                <div class="card-content">
+                    <h4>Interactive Coding Challenges</h4>
+                    <p>Test your programming skills with our collection of interactive coding exercises.</p>
+                    <a href="#">Explore →</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img">🎧</div>
+                <div class="card-content">
+                    <h4>SkillUp Podcast</h4>
+                    <p>Listen to industry experts discuss the latest trends and career advice.</p>
+                    <a href="#">Listen Now →</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img">📝</div>
+                <div class="card-content">
+                    <h4>Learning Roadmaps</h4>
+                    <p>Structured guides to help you master specific skills efficiently.</p>
+                    <a href="#">View Roadmaps →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <div class="footer-content">
+        <div class="copyright">
+            <p>&copy; 2023 SkillUp Learning Dashboard. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
