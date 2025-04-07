@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | SkillUp Learning Dashboard</title>
     <style>
-        /* Reusing your existing styles */
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +25,6 @@
             --light-gray: #f1f3f4;
         }
         
-        /* Navigation Bar */
         nav {
             background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +50,6 @@
             font-weight: 700;
         }
         
-        /* Login Container */
         .login-container {
             max-width: 500px;
             margin: 3rem auto;
@@ -150,7 +147,6 @@
             text-decoration: underline;
         }
         
-        /* Responsive Design */
         @media (max-width: 600px) {
             .login-container {
                 margin: 2rem 1rem;
@@ -164,7 +160,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav>
         <div class="logo">
             <img src="1.png" alt="SkillUp Logo">
@@ -172,14 +167,13 @@
         </div>
     </nav>
     
-    <!-- Login Form -->
     <div class="login-container">
         <div class="login-header">
             <h2>Welcome Back</h2>
             <p>Login to continue your learning journey</p>
         </div>
         
-        <form class="login-form">
+        <form id="loginForm" class="login-form">
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
@@ -194,12 +188,47 @@
                 <a href="#">Forgot password?</a>
             </div>
             
-            <button type="submit" class="btn-login"><a href ="http://127.0.0.1:5500/login.html"></a>Log In</button>
+            <button type="submit" class="btn-login">Log In</button>
         </form>
         
         <div class="signup-link">
             Don't have an account? <a href="signup.html">Sign up</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store user data in localStorage
+                    localStorage.setItem('userToken', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    
+                    // Redirect to dashboard
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred during login');
+            }
+        });
+    </script>
 </body>
 </html>
